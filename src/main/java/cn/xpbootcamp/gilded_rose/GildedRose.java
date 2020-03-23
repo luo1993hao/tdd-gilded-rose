@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class GildedRose {
-    private static final int DEFAULT_QUALITY = 30;
+    private static final int INIT_QUALITY = 30;
     private int quality;
     private int SellIn;
     private GoodsType goodsType;
@@ -71,18 +71,18 @@ public class GildedRose {
 
     private static int calculateNormalQuality(int sellIn) {
         if (sellIn >= 0) {
-            return DEFAULT_QUALITY + sellIn;
+            return INIT_QUALITY + sellIn;
         } else {
-            return DEFAULT_QUALITY + 2 * sellIn;
+            return INIT_QUALITY + 2 * sellIn;
         }
     }
 
     private static int calculateAgedBrieQuality(int sellIn) {
-        return DEFAULT_QUALITY - sellIn;
+        return INIT_QUALITY - sellIn;
     }
 
     private static int calculateSulfurasQuality() {
-        return DEFAULT_QUALITY;
+        return INIT_QUALITY;
     }
 
     private static int calculateBackstagePassQuality(int sellIn) {
@@ -90,11 +90,11 @@ public class GildedRose {
         int trebleIncreaseTime = 5;
 
         if (sellIn < doubleIncreaseTime && sellIn >= trebleIncreaseTime) {
-            return DEFAULT_QUALITY + 2 * (doubleIncreaseTime - sellIn);
+            return INIT_QUALITY + 2 * (doubleIncreaseTime - sellIn);
         }
         if (sellIn < trebleIncreaseTime && sellIn >= 0) {
             int doubleIncreaseTotal = 2 * 5;
-            return DEFAULT_QUALITY + doubleIncreaseTotal + 3 * (trebleIncreaseTime - sellIn);
+            return INIT_QUALITY + doubleIncreaseTotal + 3 * (trebleIncreaseTime - sellIn);
         }
         if (sellIn < 0) {
             return 0;
