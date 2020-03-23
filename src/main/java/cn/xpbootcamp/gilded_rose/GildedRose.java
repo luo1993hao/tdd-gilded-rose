@@ -1,46 +1,60 @@
 package cn.xpbootcamp.gilded_rose;
 
+import java.util.Objects;
+
 public class GildedRose {
     private static final int DEFAULT_QUALITY = 30;
     private int quality;
     private int SellIn;
+    private GoodsType goodsType;
 
-    public static GildedRose buildGildedRose(int sellIn) {
-        GildedRose gildedRose = new GildedRose();
-        gildedRose.setSellIn(sellIn);
-        gildedRose.setQuality(getQualityBySellIn(sellIn));
-        return gildedRose;
+    public static GildedRose buildNormalGoods(int sellIn) {
+        return new GildedRose(calculateQualityBySellInAndType(sellIn, GoodsType.NORMAL), sellIn, GoodsType.NORMAL);
     }
 
+    public static GildedRose buildAgedBrie(int sellIn) {
+        return new GildedRose(calculateQualityBySellInAndType(sellIn, GoodsType.AGED_BRIE), sellIn, GoodsType.AGED_BRIE);
+    }
+
+    private GildedRose(int quality, int sellIn, GoodsType goodsType) {
+        this.quality = quality;
+        this.SellIn = sellIn;
+        this.goodsType = goodsType;
+    }
 
     public int getQuality() {
         return quality;
     }
 
-    public void setQuality(int quality) {
-        this.quality = quality;
-    }
+    private static int calculateQualityBySellInAndType(int sellIn, GoodsType goodsType) {
 
-    public int getSellIn() {
-        return SellIn;
-    }
-
-    public void setSellIn(int sellIn) {
-        SellIn = sellIn;
-    }
-
-    private static int getQualityBySellIn(int sellIn) {
-
-        int nowQuality;
-        if (sellIn >= 0) {
-            nowQuality = DEFAULT_QUALITY + sellIn;
-        } else {
-            nowQuality = DEFAULT_QUALITY + 2 * sellIn;
+        int nowQuality = 0;
+        if (goodsType.equals(GoodsType.NORMAL)) {
+            nowQuality = calculateNormalQuality(sellIn);
+        }
+        if (Objects.equals(goodsType, GoodsType.AGED_BRIE)) {
+            nowQuality = calculateAgedBrieQuality(sellIn);
         }
 
         if (nowQuality < 0) {
             return 0;
         }
         return Math.min(nowQuality, 50);
+    }
+
+    private static int calculateNormalQuality(int sellIn) {
+        if (sellIn >= 0) {
+            return DEFAULT_QUALITY + sellIn;
+        } else {
+            return DEFAULT_QUALITY + 2 * sellIn;
+        }
+    }
+
+    private static int calculateAgedBrieQuality(int sellIn) {
+        return DEFAULT_QUALITY - sellIn;
+    }
+
+    public  enum GoodsType {
+        NORMAL, AGED_BRIE, SULFURAS, BACKSTAGE_PASS;
     }
 }
