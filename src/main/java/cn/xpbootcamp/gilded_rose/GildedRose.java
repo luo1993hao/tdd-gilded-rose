@@ -1,5 +1,6 @@
 package cn.xpbootcamp.gilded_rose;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class GildedRose {
@@ -7,6 +8,11 @@ public class GildedRose {
     private int quality;
     private int SellIn;
     private GoodsType goodsType;
+
+    public static GildedRose buildGoods(int sellIn, GoodsType goodsType) {
+        return new GildedRose(calculateQualityBySellInAndType(sellIn, goodsType), sellIn, goodsType);
+
+    }
 
     public static GildedRose buildNormalGoods(int sellIn) {
         return new GildedRose(calculateQualityBySellInAndType(sellIn, GoodsType.NORMAL), sellIn, GoodsType.NORMAL);
@@ -35,6 +41,7 @@ public class GildedRose {
     }
 
     private static int calculateQualityBySellInAndType(int sellIn, GoodsType goodsType) {
+        checkGoodsType(goodsType);
 
         int nowQuality = 0;
         if (goodsType.equals(GoodsType.NORMAL)) {
@@ -54,6 +61,12 @@ public class GildedRose {
             return 0;
         }
         return Math.min(nowQuality, 50);
+    }
+
+    private static void checkGoodsType(GoodsType goodsType) {
+        if (Arrays.stream(GoodsType.values()).noneMatch(x -> x.equals(goodsType))) {
+            throw new RuntimeException("illegal goodType");
+        }
     }
 
     private static int calculateNormalQuality(int sellIn) {
@@ -83,7 +96,10 @@ public class GildedRose {
             int doubleIncreaseTotal = 2 * 5;
             return DEFAULT_QUALITY + doubleIncreaseTotal + 3 * (trebleIncreaseTime - sellIn);
         }
-        return 0;
+        if (sellIn < 0) {
+            return 0;
+        }
+        throw new RuntimeException("illegal sellIn");
     }
 }
 

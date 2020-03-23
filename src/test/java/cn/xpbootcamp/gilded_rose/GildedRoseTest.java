@@ -10,11 +10,12 @@ public class GildedRoseTest {
 
     @Test
     void should_quality_between_zero_and_fifty() {
-        GildedRose overdueGildedRose = GildedRose.buildNormalGoods(-100);
-        MatcherAssert.assertThat(overdueGildedRose.getQuality(), Matchers.greaterThanOrEqualTo(0));
+        GildedRose overdueNormal = GildedRose.buildGoods(-(int) (Math.random() * 500), GoodsType.NORMAL);
+        MatcherAssert.assertThat(overdueNormal.getQuality(), Matchers.greaterThanOrEqualTo(0));
+        GildedRose normal = GildedRose.buildGoods(-(int) (Math.random() * 500), GoodsType.NORMAL);
+        MatcherAssert.assertThat(normal.getQuality(), Matchers.lessThanOrEqualTo(50));
 
-        GildedRose normalGildedRose = GildedRose.buildNormalGoods(50);
-        MatcherAssert.assertThat(normalGildedRose.getQuality(), Matchers.lessThanOrEqualTo(50));
+
     }
 
     @Test
@@ -59,6 +60,14 @@ public class GildedRoseTest {
         GildedRose backstagePass4 = GildedRose.buildBackstagePass(2);
         //11 = (5-2)*3 +(6-5)*2
         Assertions.assertEquals(backstagePass4.getQuality() - backstagePass3.getQuality(), 11);
+    }
+
+    @Test
+    void should_quality_equals_zero_when_goods_is_backstage_pass_and_sellIn_less_than_zero() {
+        GildedRose overDueBackStagePass = GildedRose.buildBackstagePass(-(int) (Math.random() * 50));
+        Assertions.assertEquals(overDueBackStagePass.getQuality(), 0);
+
+
     }
 
 }
