@@ -41,4 +41,12 @@ public class GildedRoseTest {
         GildedRose sulfuras1 = GildedRose.buildSulfuras((int) (Math.random() * 50));
         Assertions.assertEquals(sulfuras0.getQuality(), sulfuras1.getQuality());
     }
+
+    @Test
+    void should_increase_two_point_quality_when_goods_is_backstage_pass_and_sellIn_between_5_and_10() {
+        GildedRose backstagePass0 = GildedRose.buildBackstagePass(9);
+        GildedRose backstagePass1 = GildedRose.buildBackstagePass(8);
+        Assertions.assertEquals(backstagePass1.getQuality() - backstagePass0.getQuality(), 2);
+
+    }
 }

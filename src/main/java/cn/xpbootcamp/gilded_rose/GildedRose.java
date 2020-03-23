@@ -18,7 +18,10 @@ public class GildedRose {
 
     public static GildedRose buildSulfuras(int sellIn) {
         return new GildedRose(calculateQualityBySellInAndType(sellIn, GoodsType.SULFURAS), sellIn, GoodsType.SULFURAS);
+    }
 
+    public static GildedRose buildBackstagePass(int sellIn) {
+        return new GildedRose(calculateQualityBySellInAndType(sellIn, GoodsType.BACKSTAGE_PASS), sellIn, GoodsType.BACKSTAGE_PASS);
     }
 
     private GildedRose(int quality, int sellIn, GoodsType goodsType) {
@@ -41,7 +44,10 @@ public class GildedRose {
             nowQuality = calculateAgedBrieQuality(sellIn);
         }
         if (Objects.equals(goodsType, GoodsType.SULFURAS)) {
-            nowQuality = calculateSulfuras();
+            nowQuality = calculateSulfurasQuality();
+        }
+        if (Objects.equals(goodsType, GoodsType.BACKSTAGE_PASS)) {
+            nowQuality = calculateBackstagePassQuality(sellIn);
         }
 
         if (nowQuality < 0) {
@@ -62,11 +68,22 @@ public class GildedRose {
         return DEFAULT_QUALITY - sellIn;
     }
 
-    private static int calculateSulfuras() {
+    private static int calculateSulfurasQuality() {
         return DEFAULT_QUALITY;
     }
 
-    public enum GoodsType {
-        NORMAL, AGED_BRIE, SULFURAS, BACKSTAGE_PASS;
+    private static int calculateBackstagePassQuality(int sellIn) {
+        int doubleIncreaseTime = 10;
+        int trebleIncreaseTime = 5;
+
+        if (sellIn < doubleIncreaseTime && sellIn >= trebleIncreaseTime) {
+            return DEFAULT_QUALITY + 2 * (doubleIncreaseTime - sellIn);
+        }
+        return 0;
     }
 }
+
+enum GoodsType {
+    NORMAL, AGED_BRIE, SULFURAS, BACKSTAGE_PASS;
+}
+
