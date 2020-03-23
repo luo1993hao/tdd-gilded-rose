@@ -16,6 +16,11 @@ public class GildedRose {
         return new GildedRose(calculateQualityBySellInAndType(sellIn, GoodsType.AGED_BRIE), sellIn, GoodsType.AGED_BRIE);
     }
 
+    public static GildedRose buildSulfuras(int sellIn) {
+        return new GildedRose(calculateQualityBySellInAndType(sellIn, GoodsType.SULFURAS), sellIn, GoodsType.SULFURAS);
+
+    }
+
     private GildedRose(int quality, int sellIn, GoodsType goodsType) {
         this.quality = quality;
         this.SellIn = sellIn;
@@ -34,6 +39,9 @@ public class GildedRose {
         }
         if (Objects.equals(goodsType, GoodsType.AGED_BRIE)) {
             nowQuality = calculateAgedBrieQuality(sellIn);
+        }
+        if (Objects.equals(goodsType, GoodsType.SULFURAS)) {
+            nowQuality = calculateSulfuras();
         }
 
         if (nowQuality < 0) {
@@ -54,7 +62,11 @@ public class GildedRose {
         return DEFAULT_QUALITY - sellIn;
     }
 
-    public  enum GoodsType {
+    private static int calculateSulfuras() {
+        return DEFAULT_QUALITY;
+    }
+
+    public enum GoodsType {
         NORMAL, AGED_BRIE, SULFURAS, BACKSTAGE_PASS;
     }
 }

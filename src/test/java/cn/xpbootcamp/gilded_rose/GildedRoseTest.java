@@ -2,6 +2,7 @@ package cn.xpbootcamp.gilded_rose;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
@@ -32,5 +33,12 @@ public class GildedRoseTest {
         GildedRose agedBrie0 = GildedRose.buildAgedBrie(1);
         GildedRose agedBrie1 = GildedRose.buildAgedBrie(-1);
         MatcherAssert.assertThat(agedBrie1.getQuality() - agedBrie0.getQuality(), Matchers.greaterThan(0));
+    }
+
+    @Test
+    void should_not_change_quality_when_goods_is_sulfuras() {
+        GildedRose sulfuras0 = GildedRose.buildSulfuras((int) (Math.random() * 50));
+        GildedRose sulfuras1 = GildedRose.buildSulfuras((int) (Math.random() * 50));
+        Assertions.assertEquals(sulfuras0.getQuality(), sulfuras1.getQuality());
     }
 }
