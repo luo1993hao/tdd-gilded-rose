@@ -43,10 +43,22 @@ public class GildedRoseTest {
     }
 
     @Test
-    void should_increase_two_point_quality_when_goods_is_backstage_pass_and_sellIn_between_5_and_10() {
+    void should_increase_two_point_quality_when_goods_is_backstage_pass_and_sellIn_between_5_and_9() {
         GildedRose backstagePass0 = GildedRose.buildBackstagePass(9);
         GildedRose backstagePass1 = GildedRose.buildBackstagePass(8);
         Assertions.assertEquals(backstagePass1.getQuality() - backstagePass0.getQuality(), 2);
-
     }
+
+    @Test
+    void should_increase_two_point_quality_when_goods_is_backstage_pass_and_sellIn_between_0_and_4() {
+        GildedRose backstagePass0 = GildedRose.buildBackstagePass(3);
+        GildedRose backstagePass1 = GildedRose.buildBackstagePass(2);
+        Assertions.assertEquals(backstagePass1.getQuality() - backstagePass0.getQuality(), 3);
+
+        GildedRose backstagePass3 = GildedRose.buildBackstagePass(6);
+        GildedRose backstagePass4 = GildedRose.buildBackstagePass(2);
+        //11 = (5-2)*3 +(6-5)*2
+        Assertions.assertEquals(backstagePass4.getQuality() - backstagePass3.getQuality(), 11);
+    }
+
 }

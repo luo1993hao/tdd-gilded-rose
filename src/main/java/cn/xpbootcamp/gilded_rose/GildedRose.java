@@ -79,6 +79,10 @@ public class GildedRose {
         if (sellIn < doubleIncreaseTime && sellIn >= trebleIncreaseTime) {
             return DEFAULT_QUALITY + 2 * (doubleIncreaseTime - sellIn);
         }
+        if (sellIn < trebleIncreaseTime && sellIn >= 0) {
+            int doubleIncreaseTotal = 2 * 5;
+            return DEFAULT_QUALITY + doubleIncreaseTotal + 3 * (trebleIncreaseTime - sellIn);
+        }
         return 0;
     }
 }
